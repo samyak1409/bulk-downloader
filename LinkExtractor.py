@@ -24,7 +24,7 @@ while True:
 
     url = input('\nEnter URL: ').strip()
     if not url:  # nothing entered
-        continue
+        exit('Exiting...')
     if not url.startswith('https://'):
         url = 'https://' + url
 
