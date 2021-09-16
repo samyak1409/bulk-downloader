@@ -1,59 +1,62 @@
+# Imports:
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
+from bs4.element import Tag
 
 
-import ssl
-# Ignore SSL certificate errors
-ctx = ssl.create_default_context()
-ctx.check_hostname = False
-ctx.verify_mode = ssl.CERT_NONE
+# Attributes:
+title = 'LINK EXTRACTOR'
 
 
-def sep_print(optional_msg=''):
-    print(f'{optional_msg} \n-------------------------------------------------------------------------------------------------------------------------------------------------------------------')
+# Functions:
+def sep_print(*msgs):
+    """Print Decorator."""
+    print(*msgs)
+    print('--' * len(title))
 
 
-sep_print('\nLINK EXTRACTOR')
+# Main:
+sep_print(f'\n{title}')
 
 while True:
-    inp = input("\nEnter URL: ").strip()
 
-    if inp == '':
-        sep_print("\nInput can't be empty :| \n")
+    # Input:
+
+    url = input('\nEnter URL: ').strip()
+    if not url:  # nothing entered
         continue
+    if not url.startswith('https://'):
+        url = 'https://' + url
 
-    if inp.startswith('https://'):
-        home_link = inp
-    else:
-        home_link = 'https://' + inp
+    print(f'\nLinks from {url} are being extracted... \n')  # loading message
 
-    print(f"\nLinks from '{home_link}' are being extracted... \n")
+    # Parsing:
 
-    links_set = set()  # used set for unique links! :)
-    links_contents_list = list()
     try:
-        for anchor_tag in BeautifulSoup(urlopen(home_link), 'html.parser')('a'):
-            links_set.add(anchor_tag.get('href', None))
-            links_contents_list.append(anchor_tag.contents[0])
-    except Exception as e:
-        sep_print(f"Error occurred : {e}\n")
-        continue
+        anchor_tags = BeautifulSoup(urlopen(url), 'html.parser')('a')  # try to open url and parse all the anchor tags
+    except Exception as e:  # perhaps because of invalid URL
+        sep_print('ERROR OCCURRED:', e)
+        continue  # asking URL again
 
-    # print(links_set, '\n\n', len(links_set), '\n\n', links_contents_list, '\n\n', len(links_contents_list)); sep_print(); continue # checking
+    data = {}  # link: content_type pair
+    for anchor_tag in anchor_tags:
+        link, content = anchor_tag.get('href'), anchor_tag.contents[0]
+        if link:  # checking if link got is not of NoneType
+            if isinstance(content, Tag):  # content is some HTML itself instead of text
+                content = content.text
+            data[link.strip()] = content.strip()
+
+    # sep_print(data, len(data)); continue  # debugging
+
+    # Output:
 
     count = 0
-    for sub_link, content in zip(links_set, links_contents_list):  # zip is a method used to iterate over two lists simultaneously!
-        if content == '\n':  # (for ok.xyz)
-            content = 'N/A'
-        if sub_link.startswith(home_link):
-            print('Link:', sub_link, '\nContent:', content, '\n')
-            count += 1
-        if sub_link.startswith('/'):
-            print('Link:', home_link + sub_link, '\nContent:', content, '\n')
-            count += 1
+    for link, content in data.items():
+        if link.startswith('/'):  # relative link
+            link = url + link
+        if not content:
+            content = 'n/a'
+        print('Link:', link, '\nContent Type:', content, '\n')
+        count += 1
 
-    if count != 0:
-        print(f"{count} links found! Now you can copy them all and share or do whatever you wanna do with them! Enjoy! :D")
-    else:
-        print('No link found.')
-    sep_print()
+    sep_print(count, 'links found!')
