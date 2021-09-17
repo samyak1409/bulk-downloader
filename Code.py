@@ -3,7 +3,7 @@
 from requests import get as get_request
 from bs4 import BeautifulSoup
 from bs4.element import Tag
-from os import mkdir, chdir
+from os import mkdir, chdir, rmdir
 from datetime import datetime
 from tqdm import tqdm
 
@@ -42,7 +42,7 @@ while True:
 
     # Input:
 
-    url = input('\nEnter URL: ').strip()
+    url = input('\nEnter URL: ').strip()  # https://unsplash.com/t/
     if not url:  # nothing entered
         exit('Exiting...')
 
@@ -85,7 +85,7 @@ while True:
 
     count = 0
 
-    for link, content in data.items():  # iterating over fetched links
+    for i, (link, content) in enumerate(iterable=data.items(), start=1):  # iterating over fetched links
 
         http_i = max(link.find(HTTPS), link.find(HTTP))
         if http_i != -1 and http_i != 0:
@@ -100,7 +100,7 @@ while True:
         if not content:
             content = NA
 
-        print('Link:', link + '\n' + 'Content Name:', content)
+        print(f'{i})', 'Link:', link + '\n' + 'Content Name:', content)
 
         try:
             response = get_request(url=link, stream=True)
@@ -133,3 +133,6 @@ while True:
     sep_print('Links Downloaded:', count)
 
     chdir('..')  # back to home path
+
+    if not count:  # deleting made dir if nothing's downloaded
+        rmdir(dir_name)
