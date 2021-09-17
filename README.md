@@ -1,3 +1,3 @@
-# Link Extractor
+# Bulk Downloader (Using Web Scraping)
 
-Extracts all the links with their content type from a given URL.
+Downloads all the downloadable files from the given URL.
