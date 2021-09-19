@@ -10,7 +10,7 @@ from tqdm import tqdm
 
 # Attributes:
 
-TITLE = 'BULK DOWNLOADER USING WEB SCRAPING'
+TITLE = 'BULK DOWNLOADER (USING WEB SCRAPING)'
 N = len(TITLE)
 HTTPS, HTTP = 'https://', 'http://'
 GS_BASE = 'https://www.google.com'  # google search base URL
@@ -23,7 +23,8 @@ DL_DIR = 'Downloads'  # download dir
 
 def sep_print(*msgs):
     """Print Decorator."""
-    print(*msgs)
+    if msgs:
+        print(*msgs)
     print('-' * N)
 
 
@@ -51,7 +52,7 @@ while True:
     elif not (url.startswith(HTTPS) or url.startswith(HTTP)):
         url = HTTPS + url
 
-    print(f'\nLinks from {url} are being extracted... \n')  # loading message
+    print(f'\nLinks from "{url}" are being extracted... \n')  # loading message
 
     # Parsing:
 
@@ -70,8 +71,17 @@ while True:
                 content = content.text
             data[link.strip()] = content.strip()
 
-    print('Total Links Found:', len(data), '\n')
+    print('Total Links Found:', len(data))
     # sep_print(data); continue  # debugging
+
+    if not data:  # no links found
+        sep_print()
+        continue
+
+    if input('\nStart trying download (y/n): ').casefold() == 'n':  # confirming
+        sep_print('\n"Moved on."')
+        continue
+    print()  # spacing
 
     # Output:
 
@@ -100,7 +110,8 @@ while True:
         if not content:
             content = NA
 
-        print(f'{i})', 'Link:', link + '\n' + 'Content Name:', content)
+        print(f'{i}) Link:', link)
+        print('Content Name:', content)
 
         try:
             response = get_request(url=link, stream=True)
@@ -111,7 +122,8 @@ while True:
 
         content_type = response.headers.get('Content-Type', NA)
         size = response.headers.get('Content-Length', NA)  # in B
-        print('Content Type:', content_type + '\n' + 'Size (bytes):', size)
+        print('Content Type:', content_type)
+        print('Size (bytes):', size)
 
         filename = response.headers.get('Content-Disposition')
 
