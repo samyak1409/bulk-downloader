@@ -7,7 +7,7 @@ This project can be used to download any type of files (downloadable) from a giv
 
 ### Why the project is useful
 
-Sometimes we need all the data (files) downloaded from a particular website, and so it becomes a very time-taking and tedious task if there is no option for downloading them all at once. This is when [this](Code.py) project comes into the picture! Just connect to a fast Wi-Fi, give it that URL and sit back with a coffee, and this project will do the good for you! 😉
+Sometimes we need all the data (files) downloaded from a particular website, and so it becomes a very time-taking and tedious task if there is no option for downloading them all at once. This is when [this](Script.py) project comes into the picture! Just connect to a fast Wi-Fi, give it that URL and sit back with a coffee, and this project will do the good for you! 😉
 
 
 ## Installing the Dependencies
