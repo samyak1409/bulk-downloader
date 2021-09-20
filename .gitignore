@@ -1,0 +1,7 @@
+rough.py
+
+# Ignore everything in Downloads:
+Downloads/*
+
+# Except Downloads/.gitkeep:
+!Downloads/.gitkeep
