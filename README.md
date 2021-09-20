@@ -36,10 +36,6 @@ pip install -r requirements.txt
 
 <img src="Sample%20Screenshots/3.png">
 
-#### Another Download Result:
-
-<img src="Sample%20Screenshots/4.png">
-
 ## 
 
 ### Written in Python ❤
