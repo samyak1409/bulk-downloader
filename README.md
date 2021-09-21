@@ -36,6 +36,16 @@ pip install -r requirements.txt
 
 <img src="Sample%20Screenshots/3.png">
 
+
+## Future Features
+
+1) Scrolling Content - Some websites have a huge amount of data but loads only on scrolling down.
+
+2) Recursive Downloading - To download (any) requested number of files.
+
+3) More coming...
+
+
 ## 
 
 ### Written in Python ❤
