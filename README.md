@@ -3,7 +3,7 @@
 
 ## What the project does
 
-This project can be used to download any type of files (downloadable) from a given URL in bulk! 
+This project can be used to download any type of downloadable files from a given URL in bulk! 
 
 ### Why the project is useful
 
@@ -28,7 +28,7 @@ pip install -r requirements.txt
 
 <img src="Sample%20Screenshots/1.png">
 
-#### 3) Downloads the content expected from the links e.g. Images, Audios, Videos, etc. and skips the links with content like Text, HTML, etc.
+#### 3) Downloads the contents like Images, Audios, Videos, etc. from the links and skips the links which are [webpages](https://en.wikipedia.org/wiki/Web_page) themselves.
 
 <img src="Sample%20Screenshots/2.png">
 
