@@ -1,7 +1,6 @@
 # IMPORTS:
 
-from requests import get as get_request
-from requests.exceptions import RequestException
+from requests import get as get_request, RequestException
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 from os import mkdir, chdir, rmdir
@@ -17,6 +16,7 @@ TITLE = 'BULK DOWNLOADER (USING WEB SCRAPING)'
 HTTPS, HTTP = 'https://', 'http://'
 NA = 'n/a'
 DL_DIR = 'Downloads'  # download dir
+# HEADER = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.82 Safari/537.36'}
 anti_ddos = ('https://ddos-guard.net',
              'https://deflect.ca',
              'https://jigsaw.google.com',
